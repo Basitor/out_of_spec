@@ -15,6 +15,8 @@ extends CharacterBody2D
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
 @onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
 @onready var death_audio: AudioStreamPlayer = $DeathAudio
+@onready var steps_timer: Timer = $StepsTimer
+@onready var steps_audio: AudioStreamPlayer = $StepsAudio
 
 
 signal dead_signal
@@ -45,6 +47,7 @@ func _physics_process(_delta: float) -> void:
 		velocity.x = 0
 	gravity()
 	select_animation()
+	play_steps()
 	move_and_slide()
 
 func get_input():
@@ -60,6 +63,15 @@ func get_input():
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y -= JUMP_HEIGHT
 		audio_stream_player.play()
+
+func play_steps():
+	var direction = Input.get_axis("left", "right")
+	if direction and is_on_floor():
+		if steps_timer.is_stopped():
+			steps_audio.play()
+			steps_timer.start()
+	else:
+		steps_timer.stop()
 
 func select_animation():
 	if is_on_floor():

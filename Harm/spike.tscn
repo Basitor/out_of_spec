@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://df0hd305qg1wu"]
+[gd_scene load_steps=5 format=3 uid="uid://df0hd305qg1wu"]
 
 [ext_resource type="Script" uid="uid://bow76ughhfwef" path="res://Harm/spike.gd" id="1_7k7bx"]
 [ext_resource type="Texture2D" uid="uid://vtoh7a35fguf" path="res://Assets/spike.png" id="1_8ryga"]
+[ext_resource type="AudioStream" uid="uid://dmq3g4x3emcct" path="res://Sound/bump.wav" id="3_n0v8x"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8ryga"]
 size = Vector2(12, 32)
@@ -34,3 +35,7 @@ position = Vector2(0, -16)
 
 [node name="FallingRay" type="RayCast2D" parent="."]
 target_position = Vector2(0, 500)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_n0v8x")
+max_distance = 400.0

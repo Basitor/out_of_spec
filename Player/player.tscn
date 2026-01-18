@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://co46l2fnondjl"]
+[gd_scene load_steps=18 format=3 uid="uid://co46l2fnondjl"]
 
 [ext_resource type="Script" uid="uid://csfdht1bxxtnc" path="res://Player/player.gd" id="1_2hs0m"]
 [ext_resource type="Texture2D" uid="uid://b08kcb3f6kqpc" path="res://Assets/player_body.png" id="1_sweqy"]
@@ -7,6 +7,7 @@
 [ext_resource type="Shader" uid="uid://cgof62trq5mr3" path="res://Player/player_vignette.gdshader" id="5_k53q1"]
 [ext_resource type="AudioStream" uid="uid://bgi61g4qlk8l7" path="res://Sound/jump.wav" id="6_fhl08"]
 [ext_resource type="AudioStream" uid="uid://blri50wewch33" path="res://Sound/hurt.wav" id="7_vtle1"]
+[ext_resource type="AudioStream" uid="uid://b5llhgk1q0vgo" path="res://Sound/footsteps.wav" id="8_od3ui"]
 
 [sub_resource type="Animation" id="Animation_sweqy"]
 length = 0.001
@@ -491,5 +492,12 @@ stream = ExtResource("7_vtle1")
 [node name="AudioListener2D" type="AudioListener2D" parent="."]
 current = true
 
+[node name="StepsAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_od3ui")
+
+[node name="StepsTimer" type="Timer" parent="."]
+wait_time = 0.3
+
 [connection signal="animation_finished" from="Body/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
+[connection signal="timeout" from="StepsTimer" to="StepsAudio" method="play"]

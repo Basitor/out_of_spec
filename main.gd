@@ -2,6 +2,8 @@ extends Node2D
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
+@onready var button: Button = $CanvasLayer/Button
+
 
 @export var first_scene: PackedScene
 
@@ -30,3 +32,4 @@ func pause_next_scene(value: bool = true):
 
 func _on_button_pressed() -> void:
 	audio_stream_player.playing = not audio_stream_player.playing
+	
