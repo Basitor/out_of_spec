@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://fynkk4q5n3x7"]
+
+[ext_resource type="Script" uid="uid://c8hl1biwdrjwd" path="res://World/moving_platform.gd" id="1_iscys"]
+[ext_resource type="Texture2D" uid="uid://bjetfgutbren3" path="res://Assets/bricks_bg1.png" id="2_iscys"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mhx74"]
+size = Vector2(24, 8)
+
+[node name="MovingPlatform" type="AnimatableBody2D"]
+collision_layer = 2
+collision_mask = 0
+sync_to_physics = false
+script = ExtResource("1_iscys")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_iscys")
+region_enabled = true
+region_rect = Rect2(8, 0, 24, 8)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_mhx74")
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(0, -40)

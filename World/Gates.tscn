@@ -1,0 +1,77 @@
+[gd_scene load_steps=10 format=3 uid="uid://c3bjxwtcn68tp"]
+
+[ext_resource type="Script" uid="uid://dr26dqxacmguk" path="res://World/gates.gd" id="1_mbebt"]
+[ext_resource type="Shader" uid="uid://p6ftbb7454jm" path="res://World/Gates.gdshader" id="2_fhyf8"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fhyf8"]
+shader = ExtResource("2_fhyf8")
+shader_parameter/radius = 0.3
+shader_parameter/power = 0.2
+shader_parameter/transparent_texture = false
+
+[sub_resource type="Gradient" id="Gradient_mbebt"]
+offsets = PackedFloat32Array(0.17391305, 0.23188406, 0.66183573)
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0.65882355, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_fhyf8"]
+gradient = SubResource("Gradient_mbebt")
+width = 192
+height = 192
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+metadata/_snap_enabled = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7floa"]
+size = Vector2(40, 40)
+
+[sub_resource type="Animation" id="Animation_x1dwy"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:material:shader_parameter/power")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0.2, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_fhyf8"]
+resource_name = "warp"
+loop_mode = 2
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:material:shader_parameter/power")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 2),
+"points": PackedFloat32Array(0.5, -0.25, 0, 0.25, 0, 2, -0.16666667, -0.13333334, 0, 0),
+"times": PackedFloat32Array(0, 1)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_x1dwy"]
+_data = {
+&"RESET": SubResource("Animation_x1dwy"),
+&"warp": SubResource("Animation_fhyf8")
+}
+
+[node name="Gates" type="Area2D"]
+collision_layer = 16
+script = ExtResource("1_mbebt")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_fhyf8")
+texture = SubResource("GradientTexture2D_fhyf8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_7floa")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_x1dwy")
+}
+autoplay = "warp"

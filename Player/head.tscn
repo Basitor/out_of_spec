@@ -1,0 +1,40 @@
+[gd_scene load_steps=7 format=3 uid="uid://rjxxrlc6omtb"]
+
+[ext_resource type="Texture2D" uid="uid://cktg536cwnfoi" path="res://Assets/player_head.png" id="1_hukeq"]
+[ext_resource type="Script" uid="uid://lrviyqesaufm" path="res://Player/head.gd" id="1_pij62"]
+[ext_resource type="Shader" uid="uid://drtkc8k88r3u7" path="res://Player/head.gdshader" id="2_akhm5"]
+[ext_resource type="Texture2D" uid="uid://5huvvhyxyslu" path="res://Assets/light.png" id="2_pij62"]
+[ext_resource type="AudioStream" uid="uid://rrdqeqbutvl" path="res://Sound/click.wav" id="5_h5tyl"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7nidb"]
+shader = ExtResource("2_akhm5")
+shader_parameter/reverse = false
+shader_parameter/disable = false
+
+[node name="Head" type="Node2D"]
+script = ExtResource("1_pij62")
+
+[node name="PlayerHead" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_7nidb")
+texture = ExtResource("1_hukeq")
+region_enabled = true
+region_rect = Rect2(10, 0, 14, 18)
+
+[node name="LightArea" type="Area2D" parent="."]
+position = Vector2(2, 24)
+collision_layer = 0
+collision_mask = 2
+
+[node name="DarkCollision" type="CollisionPolygon2D" parent="LightArea"]
+polygon = PackedVector2Array(8, -32, 8, -14, 95, -5, 95, -44)
+
+[node name="LightCollision" type="CollisionPolygon2D" parent="LightArea"]
+polygon = PackedVector2Array(-12, -37, -12, -12, 95, -5, 95, -44)
+
+[node name="PointLight2D" type="PointLight2D" parent="LightArea"]
+position = Vector2(46, -24)
+energy = 0.5
+texture = ExtResource("2_pij62")
+
+[node name="ClickSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_h5tyl")

@@ -1,0 +1,109 @@
+[gd_scene load_steps=9 format=3 uid="uid://mtcqgb1cg0n0"]
+
+[ext_resource type="Script" uid="uid://deqw41p2tkk8e" path="res://Harm/centry.gd" id="1_fiev7"]
+[ext_resource type="Texture2D" uid="uid://bix14nyaw4lcb" path="res://Assets/gun-Sheet.png" id="1_lbg0h"]
+[ext_resource type="Texture2D" uid="uid://d3sdnuk1faatj" path="res://Assets/gun_base.png" id="2_fiev7"]
+[ext_resource type="Texture2D" uid="uid://d14dp4cptsboe" path="res://Assets/shot.png" id="4_cgdkn"]
+
+[sub_resource type="Curve" id="Curve_cgdkn"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.4044944), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Animation" id="Animation_tlpmt"]
+resource_name = "rotate"
+length = 0.1
+loop_mode = 1
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Gun:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 0]
+}
+
+[sub_resource type="Animation" id="Animation_cgdkn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Gun:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_cgdkn"]
+_data = {
+&"RESET": SubResource("Animation_cgdkn"),
+&"rotate": SubResource("Animation_tlpmt")
+}
+
+[node name="Centry" type="Node2D"]
+script = ExtResource("1_fiev7")
+
+[node name="Effects" type="Node2D" parent="."]
+position = Vector2(0, 24)
+
+[node name="Sprite2D" type="Sprite2D" parent="Effects"]
+texture = ExtResource("4_cgdkn")
+
+[node name="PointLight2D" type="PointLight2D" parent="Effects"]
+texture = ExtResource("4_cgdkn")
+
+[node name="Line2D" type="Line2D" parent="Effects"]
+width = 1.0
+width_curve = SubResource("Curve_cgdkn")
+
+[node name="Gun" type="Sprite2D" parent="."]
+position = Vector2(0, 8)
+texture = ExtResource("1_lbg0h")
+offset = Vector2(0, 4)
+hframes = 2
+
+[node name="Base" type="Sprite2D" parent="."]
+position = Vector2(0, 12)
+texture = ExtResource("2_fiev7")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+collision_mask = 7
+collide_with_areas = true
+
+[node name="ScanTimer" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
+
+[node name="PostTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="ShotTimer" type="Timer" parent="."]
+wait_time = 0.1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_cgdkn")
+}
+
+[node name="Markers" type="Node2D" parent="."]
+
+[node name="1" type="Marker2D" parent="Markers"]
+position = Vector2(-2, 24)
+
+[node name="2" type="Marker2D" parent="Markers"]
+position = Vector2(0, 24)
+
+[node name="3" type="Marker2D" parent="Markers"]
+position = Vector2(2, 24)
+
+[connection signal="timeout" from="ScanTimer" to="." method="_on_scan_timer_timeout"]
+[connection signal="timeout" from="PostTimer" to="." method="_on_post_timer_timeout"]
+[connection signal="timeout" from="ShotTimer" to="." method="_on_shot_timer_timeout"]

@@ -1,0 +1,186 @@
+[gd_scene load_steps=16 format=3 uid="uid://mtcqgb1cg0n0"]
+
+[ext_resource type="Script" uid="uid://deqw41p2tkk8e" path="res://Harm/centry.gd" id="1_fiev7"]
+[ext_resource type="Texture2D" uid="uid://bix14nyaw4lcb" path="res://Assets/gun-Sheet.png" id="1_lbg0h"]
+[ext_resource type="Texture2D" uid="uid://d3sdnuk1faatj" path="res://Assets/gun_base.png" id="2_fiev7"]
+[ext_resource type="Texture2D" uid="uid://d14dp4cptsboe" path="res://Assets/shot.png" id="4_cgdkn"]
+[ext_resource type="Texture2D" uid="uid://0yvl5v6tmxna" path="res://Assets/pixel.png" id="5_t1ctp"]
+[ext_resource type="AudioStream" uid="uid://bllpgyf8rrvfn" path="res://Sound/shot.wav" id="6_kkdo4"]
+
+[sub_resource type="Curve" id="Curve_cgdkn"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Animation" id="Animation_cgdkn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Gun:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_tlpmt"]
+resource_name = "rotate"
+length = 0.1
+loop_mode = 1
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Gun:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ColorRect:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_cgdkn"]
+_data = {
+&"RESET": SubResource("Animation_cgdkn"),
+&"rotate": SubResource("Animation_tlpmt")
+}
+
+[sub_resource type="Gradient" id="Gradient_7eyu6"]
+colors = PackedColorArray(0.8917753, 0.8964794, 2.3102762e-06, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_yfy3r"]
+gradient = SubResource("Gradient_7eyu6")
+
+[sub_resource type="Curve" id="Curve_t1ctp"]
+_limits = [0.0, 2.0, 0.0, 1.0]
+_data = [Vector2(0, 2), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_kkdo4"]
+curve = SubResource("Curve_t1ctp")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_t1ctp"]
+particle_flag_disable_z = true
+angular_velocity_min = -30.000015
+angular_velocity_max = 29.999983
+radial_velocity_min = -50.000023
+radial_velocity_max = 49.999977
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_kkdo4")
+color_ramp = SubResource("GradientTexture1D_yfy3r")
+
+[node name="Gun" type="Node2D"]
+script = ExtResource("1_fiev7")
+aim_delay = 1.0
+
+[node name="Effects" type="Node2D" parent="."]
+visible = false
+position = Vector2(0, 24)
+
+[node name="Flash" type="Node2D" parent="Effects"]
+
+[node name="Sprite" type="Sprite2D" parent="Effects/Flash"]
+texture = ExtResource("4_cgdkn")
+
+[node name="Light" type="PointLight2D" parent="Effects/Flash"]
+texture = ExtResource("4_cgdkn")
+
+[node name="Tracer" type="Line2D" parent="Effects"]
+modulate = Color(1, 1, 0, 1)
+points = PackedVector2Array(0, 0, 0, 0)
+width = 1.0
+width_curve = SubResource("Curve_cgdkn")
+
+[node name="EffectsTimer" type="Timer" parent="Effects"]
+wait_time = 0.1
+one_shot = true
+
+[node name="Gun" type="Sprite2D" parent="."]
+position = Vector2(0, 8)
+texture = ExtResource("1_lbg0h")
+offset = Vector2(0, 4)
+hframes = 2
+
+[node name="Markers" type="Node2D" parent="Gun"]
+position = Vector2(0, -8)
+
+[node name="1" type="Marker2D" parent="Gun/Markers"]
+position = Vector2(-2, 24)
+
+[node name="2" type="Marker2D" parent="Gun/Markers"]
+position = Vector2(0, 24)
+
+[node name="3" type="Marker2D" parent="Gun/Markers"]
+position = Vector2(2, 24)
+
+[node name="Base" type="Sprite2D" parent="."]
+position = Vector2(0, 12)
+texture = ExtResource("2_fiev7")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2(0, 24)
+collision_mask = 7
+collide_with_areas = true
+
+[node name="ScanTimer" type="Timer" parent="."]
+wait_time = 0.2
+autostart = true
+
+[node name="PostTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="ShotTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="AimDelayTimer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_cgdkn")
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+offset_left = -3.0
+offset_top = 3.0
+offset_right = -1.0
+offset_bottom = 5.0
+color = Color(1, 0, 0, 1)
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+modulate = Color(0.9603855, 0.7102057, 1.1551381e-06, 1)
+emitting = false
+amount = 15
+texture = ExtResource("5_t1ctp")
+lifetime = 0.3
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_t1ctp")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_kkdo4")
+
+[connection signal="timeout" from="Effects/EffectsTimer" to="." method="_on_effects_timer_timeout"]
+[connection signal="timeout" from="ScanTimer" to="." method="_on_scan_timer_timeout"]
+[connection signal="timeout" from="PostTimer" to="." method="_on_post_timer_timeout"]
+[connection signal="timeout" from="ShotTimer" to="." method="_on_shot_timer_timeout"]

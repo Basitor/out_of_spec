@@ -1,0 +1,218 @@
+[gd_scene load_steps=11 format=3 uid="uid://bb4d28skrdpws"]
+
+[ext_resource type="Script" uid="uid://5q3em3g4tqgm" path="res://Player/sprite.gd" id="1_68agy"]
+
+[sub_resource type="Gradient" id="Gradient_wcf1e"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_68agy"]
+gradient = SubResource("Gradient_wcf1e")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_68agy"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 5.0
+angle_min = -49.99999
+angle_max = 50.00001
+gravity = Vector3(0, -70, 0)
+linear_accel_min = -100.0
+linear_accel_max = 99.99999
+scale_min = 2.0
+scale_max = 4.0
+color = Color(0.93, 0.81933004, 0.53940004, 1)
+color_ramp = SubResource("GradientTexture1D_68agy")
+turbulence_noise_scale = 4.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_68agy"]
+radius = 7.0
+
+[sub_resource type="Gradient" id="Gradient_68agy"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_mcakc"]
+gradient = SubResource("Gradient_68agy")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.8, 0.8)
+metadata/_snap_enabled = true
+
+[sub_resource type="Animation" id="Animation_mcakc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Particles:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Label:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Camera2D:zoom")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Label:text")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["Wake Up"]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Camera2D:offset")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(300, -200)]
+}
+
+[sub_resource type="Animation" id="Animation_68agy"]
+resource_name = "appear"
+length = 8.0
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Particles:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2, 3, 4, 5, 8),
+"transitions": PackedFloat32Array(6.276666, 1, 6.276666, 6.276666, 6.276666, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0.19607843), Color(1, 1, 1, 0), Color(1, 1, 1, 0.3529412), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Label:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1, 1.8000001, 3.3, 4, 5, 6, 6.6, 6.7000003, 8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0.19607843), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 0.3529412), Color(1, 1, 1, 0), Color(1, 0.85, 0, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 0.85, 0, 1)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Label")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"values": []
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Camera2D:zoom")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(3, 3), Vector2(1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Label:text")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(6.6, 6.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": ["Wake Up", "And light up the way"]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Camera2D:offset")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(50, -50), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xmy37"]
+_data = {
+&"RESET": SubResource("Animation_mcakc"),
+&"appear": SubResource("Animation_68agy")
+}
+
+[node name="Sprite" type="CharacterBody2D"]
+collision_mask = 10
+script = ExtResource("1_68agy")
+
+[node name="Particles" type="GPUParticles2D" parent="."]
+modulate = Color(1, 1, 1, 0)
+top_level = true
+amount = 64
+lifetime = 0.5
+randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_68agy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_68agy")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+offset = Vector2(300, -200)
+position_smoothing_enabled = true
+rotation_smoothing_enabled = true
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+texture = SubResource("GradientTexture2D_mcakc")
+
+[node name="Label" type="Label" parent="."]
+modulate = Color(1, 1, 1, 0)
+offset_left = 11.0
+offset_top = -23.0
+offset_right = 170.0
+text = "Wake Up"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_xmy37")
+}
+autoplay = "appear"

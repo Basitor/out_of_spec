@@ -1,0 +1,71 @@
+[gd_scene load_steps=11 format=3 uid="uid://brfwq53nsu8fm"]
+
+[ext_resource type="Script" uid="uid://m6iwvujldr25" path="res://Levels/level.gd" id="1_vb5m6"]
+[ext_resource type="PackedScene" uid="uid://rjxxrlc6omtb" path="res://Player/head.tscn" id="1_wthr3"]
+[ext_resource type="Texture2D" uid="uid://cv1fjfbmguyxd" path="res://Assets/bricks_bg2.png" id="2_mvxry"]
+[ext_resource type="PackedScene" uid="uid://co46l2fnondjl" path="res://Player/player.tscn" id="2_vb5m6"]
+[ext_resource type="PackedScene" uid="uid://b6ff7act4o5ht" path="res://World/world.tscn" id="3_mvxry"]
+[ext_resource type="PackedScene" uid="uid://btwofp50ibr8f" path="res://Levels/Checkpoint.tscn" id="6_4xip6"]
+[ext_resource type="PackedScene" uid="uid://c3bjxwtcn68tp" path="res://World/Gates.tscn" id="6_mtp4c"]
+
+[sub_resource type="Gradient" id="Gradient_1bvp3"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_mvxry"]
+gradient = SubResource("Gradient_1bvp3")
+width = 3000
+height = 500
+fill_from = Vector2(1, 0.5046729)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mtp4c"]
+size = Vector2(4999, 700)
+
+[node name="BaseLvl" type="Node2D"]
+script = ExtResource("1_vb5m6")
+
+[node name="BG" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("2_mvxry")
+region_enabled = true
+region_rect = Rect2(0, 0, 5000, 5000)
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="TileMap" parent="World" instance=ExtResource("3_mvxry")]
+
+[node name="Player" parent="." instance=ExtResource("2_vb5m6")]
+
+[node name="Head" parent="." instance=ExtResource("1_wthr3")]
+
+[node name="Labels" type="Node2D" parent="."]
+scale = Vector2(0.5, 0.5)
+
+[node name="Harm" type="Node2D" parent="."]
+
+[node name="death" type="Node2D" parent="."]
+visible = false
+
+[node name="Sprite2D" type="Sprite2D" parent="death"]
+position = Vector2(-1, 420)
+texture = SubResource("GradientTexture2D_mvxry")
+region_enabled = true
+region_rect = Rect2(0, 0, 5000, 500)
+
+[node name="DeathArea" type="Area2D" parent="death"]
+position = Vector2(33, -234)
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="death/DeathArea"]
+position = Vector2(-37.5, 1069)
+shape = SubResource("RectangleShape2D_mtp4c")
+
+[node name="Checkpoints" type="Node2D" parent="."]
+
+[node name="Checkpoint" parent="Checkpoints" instance=ExtResource("6_4xip6")]
+position = Vector2(-1, -11)
+
+[node name="Gates" parent="." instance=ExtResource("6_mtp4c")]
+
+[node name="Achivements" type="Node2D" parent="."]
+
+[connection signal="body_entered" from="Gates" to="." method="_on_gates_body_entered"]

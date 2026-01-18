@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://cebsgqtmebdga"]
+
+[ext_resource type="Script" uid="uid://mlgd7qu22qaw" path="res://Achievement/achivement_area.gd" id="1_ja7bv"]
+
+[node name="AchivementArea" type="Area2D"]
+collision_layer = 8
+script = ExtResource("1_ja7bv")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
